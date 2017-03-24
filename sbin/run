@@ -1,0 +1,47 @@
+#!/bin/bash
+
+hollowpath="${TMPDIR}/workspace/Yeap/this/is/for/real/a/mobstersquirrel"
+mkdir -p "${hollowpath}"
+echo "[[file:/usr/local/ship-it-right-now.jpg]]" > "${hollowpath}/shipit.org"
+
+chmod 777 -R "${TMPDIR}"
+chown $UID:$GID -R "${TMPDIR}"
+
+Xorg\
+  -config /etc/xpra/xorg.conf \
+  -logfile "${TMPDIR}/Xorg.log" \
+  -dpi $XORG_DPI \
+  -nolisten tcp &
+
+su-exec "${UNAME}" xpra start $DISPLAY \
+                     --bell=no \
+                     --bind-tcp="0.0.0.0:${XPRA_TCP_PORT}" \
+                     --compress="${XPRA_COMPRESS}" \
+                     --clipboard=no \
+                     --dbus-control=no \
+                     --dbus-proxy=no \
+                     --dpi="${XPRA_HTML_DPI}" \
+                     --encoding="${XPRA_ENCODING}" \
+                     --exit-with-children \
+                     --exit-with-client=yes \
+                     --file-transfer=no \
+                     --global-menus=no \
+                     --html=on \
+                     --idle-timeout=$XPRA_IDLE_TIMEOUT \
+                     --keyboard-sync="${XPRA_KEYBOARD_SYNC}" \
+                     --mdns=no \
+                     --microphone=no \
+                     --no-daemon \
+                     --printing=no \
+                     --pulseaudio=no \
+                     --resize-display=no \
+                     --server-idle-timeout=$XPRA_SERVER_IDLE_TIMEOUT \
+                     --sharing=no \
+                     --start-child="emacs -geometry 100x48 --chdir \"${TMPDIR}/workspace\"" \
+                     --start-after-connect="xset r rate 9000 1" \
+                     --socket-dir="${TMPDIR}" \
+                     --socket-dirs="${TMPDIR}" \
+                     --speaker=no \
+                     --start-new-commands=no \
+                     --webcam=no \
+                     --xsettings=no

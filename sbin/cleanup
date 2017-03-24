@@ -1,0 +1,3 @@
+#!/bin/sh
+rm -rf /var/cache/* /tmp/* /var/log/* ~/.cache
+mkdir -p /var/cache/apk

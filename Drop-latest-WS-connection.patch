@@ -1,0 +1,27 @@
+From 2cc23598a7c45f25a1f23f73a9c5165a87965fc1 Mon Sep 17 00:00:00 2001
+From: JAremko <w3techplayground@gmail.com>
+Date: Wed, 22 Mar 2017 23:15:25 +0200
+Subject: [PATCH] Drop latest WS connection
+
+---
+ xpra/server/server_base.py | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/xpra/server/server_base.py b/xpra/server/server_base.py
+index 051ebec..6a3fa90 100644
+--- a/xpra/server/server_base.py
++++ b/xpra/server/server_base.py
+@@ -1044,6 +1044,9 @@ class ServerBase(ServerCore):
+         if ServerCore.hello_oked(self, proto, packet, c, auth_caps):
+             #has been handled
+             return
++        if self._server_sources.items():
++            self.disconnect_client(proto, NEW_CLIENT, "this session does not allow sharing")
++            return
+         if c.boolget("screenshot_request"):
+             self.send_screenshot(proto)
+             return
+-- 
+2.9.3
+
+

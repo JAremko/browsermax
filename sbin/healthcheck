@@ -1,0 +1,9 @@
+#!/bin/bash
+if pgrep -x "emacs" > /dev/null
+then
+	# Give Xpra extra time.
+	sleep 15
+	exit 0
+else
+	exit 1
+fi
