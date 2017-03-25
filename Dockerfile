@@ -2,8 +2,7 @@ FROM alpine:edge
 
 MAINTAINER JAremko <w3techplaygound@gmail.com>
 
-# Kudos to @urzds for Xpra building example
-ENV XPRA_VERSION=2.0
+ENV XPRA_REV="15411"
 
 COPY /sbin/cleanup /usr/local/sbin/cleanup
 
@@ -73,12 +72,6 @@ RUN echo "${UNAME}:x:${UID}:${GID}:${UNAME},,,:${UHOME}:${SHELL}" \
     >> /etc/group \
     && mkdir -p "${UHOME}"
 
-# Spacemacs layer dependencies
-RUN apk --no-cache add \
-    aspell \
-    aspell-en \
-    && cleanup
-
 # Spacemacs
 COPY .spacemacs ${UHOME}/.spacemacs
 RUN apk --no-cache add git \
@@ -89,8 +82,6 @@ RUN apk --no-cache add git \
 # 2X
     && su-exec ${UNAME} emacs -nw -batch -u ${UNAME} -q -kill \
     && cleanup
-
-COPY Drop-latest-WS-connection.patch /tmp/xpra.patch
 
 # Xpra deps
 RUN apk --no-cache add \
@@ -131,9 +122,10 @@ RUN apk --no-cache add \
 # Meta build-deps
     && apk --no-cache add --virtual build-deps \
     build-base \
-    curl \
     ffmpeg-dev \
     flac-dev \
+    git \
+    git-svn \
     libc-dev \
     libvpx-dev \
     libxcomposite-dev \
@@ -145,6 +137,7 @@ RUN apk --no-cache add \
     libxtst-dev \
     linux-headers \
     opus-dev \
+    perl-git \
     py-gtk-dev \
     py-gtkglext-dev \
     py-numpy-dev \
@@ -160,9 +153,8 @@ RUN apk --no-cache add \
     xxhash \
 # Xpra
     && cd /tmp/ \
-    && curl https://www.xpra.org/src/xpra-$XPRA_VERSION.tar.xz | tar -xJ \
-    && cd xpra-$XPRA_VERSION \
-    && git apply /tmp/xpra.patch \
+    && git svn clone  -s -r${XPRA_REV} https://www.xpra.org/svn/Xpra/ \
+    && cd /tmp/Xpra/src \
     && echo -e 'Section "Module"\n  Load "fb"\n  EndSection' \
     >> etc/xpra/xorg.conf \
     && python2 setup.py install \
@@ -227,6 +219,7 @@ ENV TMPDIR="${UHOME}/.emacs.d/.cache"
 ENV XAUTHORITY="${TMPDIR}/Xauthority"
 ENV NO_AT_BRIDGE=1
 
+# Mount point for tmpfs
 RUN rm -rf /tmp \
     && ln -s "${TMPDIR}" /tmp \
     && ln -s "${TMPDIR}" ${UHOME}/.xpra \
@@ -234,7 +227,7 @@ RUN rm -rf /tmp \
 
 HEALTHCHECK --interval=30s \
             --timeout=30s \
-            --retries=10 \
+            --retries=4 \
             CMD /usr/local/sbin/healthcheck
 
 CMD run

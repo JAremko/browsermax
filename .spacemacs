@@ -37,7 +37,6 @@ values."
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      helm
-     auto-completion
      emacs-lisp
      ibuffer
      github
@@ -45,8 +44,6 @@ values."
      deft
      speed-reading
      org
-     spell-checking
-     syntax-checking
      version-control
      ranger
      rebox

@@ -1,8 +1,11 @@
 #!/bin/bash
-if pgrep -x "emacs" > /dev/null
-then
-	# Give Xpra extra time.
-	sleep 15
+if pgrep -x "emacs" > /dev/null; then
+	if [[ ! -f /tmp/stared ]]; then
+		# Give Xpra extra time.
+		sleep 15
+		echo "started" > /tmp/stared
+		chmod 770 /tmp/stared
+	fi
 	exit 0
 else
 	exit 1
