@@ -1,6 +1,33 @@
 #!/bin/bash
+if [ ! -f /tmp/start_token ]; then
+	RND=$RANDOM
+	echo $RND > /tmp/start_token
+	echo $RND > /tmp/start_token_check
+	chmod 600 /tmp/start_token_check
+	chmod 662 /tmp/start_token
+fi
+
+start_token=`cat /tmp/start_token`
+start_token_check=`cat /tmp/start_token_check`
+
+if [ "$start_token" != "$start_token_check" ]; then
+	if [ ! -f /tmp/conn_detected_at ]; then
+		echo `date +%s` > /tmp/conn_detected_at
+		chmod 600 /tmp/conn_detected_at
+	fi
+fi
+
+nowTs=`date +%s`
+connTs=`cat /tmp/conn_detected_at`
+deltaTs=`expr $nowTs - $connTs`
+
+if [ "$deltaTs" -gt "$APPROXIMATE_MAX_CONNECTION_LENGTH_S" ]; then
+	killall emacs
+	killall xpra
+fi
+
 if pgrep -x "emacs" > /dev/null; then
-	if [[ ! -f /tmp/stared ]]; then
+	if [ ! -f /tmp/stared ]; then
 		# Give Xpra extra time.
 		sleep 15
 		echo "started" > /tmp/stared

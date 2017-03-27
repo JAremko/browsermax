@@ -39,6 +39,7 @@ su-exec "${UNAME}" xpra start $DISPLAY \
                      --sharing=no \
                      --start-child="emacs -geometry 100x48 --chdir \"${TMPDIR}/workspace\"" \
                      --start-after-connect="xset r rate 9000 1" \
+                     --start-after-connect="echo kek > /tmp/start_token" \
                      --socket-dir="${TMPDIR}" \
                      --socket-dirs="${TMPDIR}" \
                      --speaker=no \

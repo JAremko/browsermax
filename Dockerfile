@@ -209,9 +209,11 @@ ENV DISPLAY=":14"                   \
     XPRA_ENCODING="rgb"             \
     XPRA_HTML_DPI="96"              \
     XPRA_KEYBOARD_SYNC="yes"        \
-    XPRA_IDLE_TIMEOUT="120"         \
+    XPRA_IDLE_TIMEOUT="60"          \
     XPRA_SERVER_IDLE_TIMEOUT="3600" \
     XPRA_TCP_PORT="10000"
+
+ENV APPROXIMATE_MAX_CONNECTION_LENGTH_S="120"
 
 EXPOSE ${XPRA_TCP_PORT}
 
