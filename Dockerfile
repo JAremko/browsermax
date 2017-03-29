@@ -2,7 +2,7 @@ FROM alpine:edge
 
 MAINTAINER JAremko <w3techplaygound@gmail.com>
 
-ENV XPRA_REV="15431"
+ENV XPRA_REV="15453"
 
 COPY /sbin/cleanup /usr/local/sbin/cleanup
 
