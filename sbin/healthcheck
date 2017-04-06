@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ ! -f /tmp/start_token ]; then
+if [ ! -f /tmp/start_token_check ]; then
 	RND=$RANDOM
 	echo $RND > /tmp/start_token
 	echo $RND > /tmp/start_token_check
