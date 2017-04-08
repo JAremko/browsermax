@@ -29,7 +29,7 @@ fi
 if pgrep -x "emacs" > /dev/null; then
 	if [ ! -f /tmp/stared ]; then
 		# Give Xpra extra time.
-		sleep 15
+		sleep 5
 		echo "started" > /tmp/stared
 		chmod 770 /tmp/stared
 	fi

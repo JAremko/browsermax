@@ -2,7 +2,9 @@ FROM alpine:edge
 
 MAINTAINER JAremko <w3techplaygound@gmail.com>
 
-ENV XPRA_REV="15453"
+LABEL BROWSERMAX=tothemax
+
+ENV XPRA_REV="15529"
 
 COPY /sbin/cleanup /usr/local/sbin/cleanup
 
@@ -122,6 +124,7 @@ RUN apk --no-cache add \
 # Meta build-deps
     && apk --no-cache add --virtual build-deps \
     build-base \
+    cython-dev \
     ffmpeg-dev \
     flac-dev \
     git \
