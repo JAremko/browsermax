@@ -4,7 +4,7 @@ MAINTAINER JAremko <w3techplaygound@gmail.com>
 
 LABEL BROWSERMAX=tothemax
 
-ENV XPRA_REV="15529"
+ENV XPRA_REV="15744"
 
 COPY /sbin/cleanup /usr/local/sbin/cleanup
 
@@ -236,3 +236,5 @@ HEALTHCHECK --interval=30s \
             CMD /usr/local/sbin/healthcheck
 
 CMD run
+
+LABEL kek=pek
