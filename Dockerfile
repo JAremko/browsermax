@@ -4,7 +4,7 @@ MAINTAINER JAremko <w3techplaygound@gmail.com>
 
 LABEL BROWSERMAX=tothemax
 
-ENV XPRA_REV="15744"
+ENV XPRA_REV="15743"
 
 COPY /sbin/cleanup /usr/local/sbin/cleanup
 
