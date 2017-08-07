@@ -1,4 +1,4 @@
-FROM alpine:edge
+FROM alpine
 
 MAINTAINER JAremko <w3techplaygound@gmail.com>
 
@@ -236,5 +236,3 @@ HEALTHCHECK --interval=30s \
             CMD /usr/local/sbin/healthcheck
 
 CMD run
-
-LABEL kek=pek
