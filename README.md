@@ -1,4 +1,5 @@
 ### backend for "Try Online" at http://spacemacs.org/
+*Try online was temporarily disabled. See https://github.com/syl20bnr/spacemacs/issues/8634*
 
 #### usage:
 ```
